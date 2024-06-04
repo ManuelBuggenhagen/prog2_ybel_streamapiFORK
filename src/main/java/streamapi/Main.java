@@ -2,8 +2,12 @@ package streamapi;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-/** Starter for the stream api task. */
+/**
+ * Starter for the stream api task.
+ */
 public class Main {
     /**
      * And go.
@@ -17,7 +21,7 @@ public class Main {
         // Task II: Set of ECTS of all IFM students
 
         // Task III: Random
-        System.out.println(random());
+        System.out.println("stream result: " + random());
 
         // Task IV+V: Resources
 
@@ -71,8 +75,18 @@ public class Main {
                 returnList.add(randomIntegers.get(i) * randomIntegers.get(i));
             }
         }
+        System.out.println("original result: " + returnList);
 
-        return returnList;
+
+        List<Integer> result;
+        Random random = new Random();
+        result = random.ints(10, 0, 10)
+            .boxed()
+            .filter(c -> c % 2 == 0)
+            .map(b -> b * b)
+            .toList();
+
+        return result;
     }
 
     /**
