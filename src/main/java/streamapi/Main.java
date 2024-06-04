@@ -3,7 +3,9 @@ package streamapi;
 import java.io.InputStream;
 import java.util.*;
 
-/** Starter for the stream api task. */
+/**
+ * Starter for the stream api task.
+ */
 public class Main {
     /**
      * And go.
@@ -13,14 +15,14 @@ public class Main {
     public static void main(String... args) {
 
         // Task I: Students
-        System.out.println(
-                students(
-                        List.of(
-                                new Student("A", 30, Enrollment.IFM),
-                                new Student("B", 45, Enrollment.IFM),
-                                new Student("C", 60, Enrollment.ELT),
-                                new Student("D", 45, Enrollment.ARCH),
-                                new Student("E", 80, Enrollment.IFM))));
+        System.out.println("stream result: "+
+            students(
+                List.of(
+                    new Student("A", 30, Enrollment.IFM),
+                    new Student("B", 45, Enrollment.IFM),
+                    new Student("C", 60, Enrollment.ELT),
+                    new Student("D", 45, Enrollment.ARCH),
+                    new Student("E", 80, Enrollment.IFM))));
 
         // Task II: Set of ECTS of all IFM students
 
@@ -44,8 +46,12 @@ public class Main {
         for (Student s : studentList) {
             sum += s.cps();
         }
+        System.out.println("original result: " + sum);
 
-        return sum;
+        Integer sum2 = 0;
+        return sum2 = studentList.stream()
+            .map(Student::cps)
+            .reduce(0, Integer::sum);
     }
 
     /**
