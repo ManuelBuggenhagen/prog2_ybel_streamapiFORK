@@ -2,8 +2,11 @@ package streamapi;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.stream.Collectors;
 
-/** Starter for the stream api task. */
+/**
+ * Starter for the stream api task.
+ */
 public class Main {
     /**
      * And go.
@@ -15,14 +18,14 @@ public class Main {
         // Task I: Students
 
         // Task II: Set of ECTS of all IFM students
-        System.out.println(
-                ifmCps(
-                        List.of(
-                                new Student("A", 35, Enrollment.IFM),
-                                new Student("B", 35, Enrollment.IFM),
-                                new Student("C", 60, Enrollment.ELT),
-                                new Student("D", 45, Enrollment.ARCH),
-                                new Student("E", 80, Enrollment.IFM))));
+        System.out.println("stream result: "+
+            ifmCps(
+                List.of(
+                    new Student("A", 35, Enrollment.IFM),
+                    new Student("B", 50, Enrollment.IFM),
+                    new Student("C", 60, Enrollment.ELT),
+                    new Student("D", 45, Enrollment.ARCH),
+                    new Student("E", 80, Enrollment.IFM))));
 
         // Task III: Random
 
@@ -61,8 +64,15 @@ public class Main {
                 result.add(i);
             }
         }
+        System.out.println("original result: " + result);
 
-        return result;
+        Set<Integer> result1;
+        return result1 = studentList.stream()
+            .filter(Student::isIFM)
+            .map(Student::cps)
+            .collect(Collectors.toSet());
+
+
     }
 
     /**
