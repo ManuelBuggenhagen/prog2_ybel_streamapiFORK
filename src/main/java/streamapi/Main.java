@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-/** Starter for the stream api task. */
+/**
+ * Starter for the stream api task.
+ */
 public class Main {
     /**
      * And go.
@@ -22,7 +26,8 @@ public class Main {
         // Task III: Random
 
         // Task IV+V: Resources
-        System.out.println(resources("file.txt"));
+        System.out.println("stream result:  " + resources("file.txt"));
+        //System.out.println(getResourceAsStream("file.txt"));
     }
 
     /**
@@ -74,7 +79,9 @@ public class Main {
      */
     private static InputStream getResourceAsStream(String path) {
         // TODO
-        throw new UnsupportedOperationException();
+        InputStream inputStream;
+        inputStream = Main.class.getResourceAsStream(path);
+        return inputStream;
     }
 
     /**
@@ -89,6 +96,8 @@ public class Main {
      */
     public static String resources(String path) {
         // TODO
+        //original
+        /*
         StringBuilder result = new StringBuilder();
 
         try (InputStream stream = getResourceAsStream(path)) {
@@ -112,7 +121,31 @@ public class Main {
         } catch (IOException e) {
             System.err.println("Ouch, that didn't work: \n" + e.getMessage());
         }
+        System.out.println("original result: " + result.toString());
 
+         */
+
+
+        //stream version
+        StringBuilder result = new StringBuilder();
+
+        try (InputStream stream = getResourceAsStream(path)) {
+            BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+
+            Stream<String> workerStream = r.lines().toList().stream();
+
+            workerStream
+                .filter(b -> b.charAt(0) == 'a')
+                .filter(str -> str.length() >= 2)
+                .forEach(f -> {
+                    result.append(f).append("\n");
+                });
+
+        } catch (IOException e) {
+            System.err.println("Ouch, that didn't work: \n" + e.getMessage());
+        }
+
+        //StringBuilder test = new StringBuilder(result3);
         return result.toString();
     }
 }
